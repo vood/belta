@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title: MyString
+  source: 
+  is_ad: 
+  body: MyText
+
+two:
+  title: MyString
+  source: 
+  is_ad: 
+  body: MyText

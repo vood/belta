@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Belta</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<ul>
+  <li><%= link_to "Статьи", :posts %></li>
+  <li><%= link_to "Категории", :categories %></li>
+  <li><%= link_to "Паук", 'crawler/index' %></li>
+</ul>
+<%= yield %>
+
+</body>
+</html>
