@@ -17,7 +17,7 @@
 
 <p>
   <b>Body:</b>
-  <%= @post.body %>
+  <%= sanitize(@post.body) %>
 </p>
 
 

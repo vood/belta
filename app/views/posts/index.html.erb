@@ -6,7 +6,6 @@
     <th>Заголовок</th>
     <th>Источник</th>
     <th>Инф/Рек</th>
-    <th>Текст</th>
     <th></th>
     <th></th>
     <th></th>
@@ -18,7 +17,6 @@
     <td><%= strip_tags post.title %></td>
     <td><%= post.source %></td>
     <td><%= post.is_ad %></td>
-    <td><%= strip_tags post.body %></td>
     <td><%= link_to 'Show', post %></td>
     <td><%= link_to 'Edit', edit_post_path(post) %></td>
     <td><%= link_to 'Destroy', post, confirm: 'Are you sure?', method: :delete %></td>
