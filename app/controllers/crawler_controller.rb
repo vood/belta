@@ -2,33 +2,36 @@
 require 'open-uri'
 class CrawlerController < ApplicationController
   def index
-    feeds = {
-        'http://it.tut.by/rss.xml' => '#article_body',
-        'http://www.ej.by/news/it/it.rss' => 'body',
-        'http://feeds.feedburner.com/providers_by' => 'body',
-        'http://news.21.by/pub/rss/all.rss' => '.editor .sizeable'
-    }
+    feeds = Feed.all
 
-    regex = Category.all(:include => :tags).collect { |c| [c.id, Regexp.union(c.tag_list)] } 
-   debugger 
-    feeds.each_pair do |url, selector| 
-      Feedzirra::Feed.fetch_and_parse(url).entries.each do |entry|
+    regex = Category.all(:include => :tags).collect { |c| [c.id, Regexp.union(c.tag_list.map { |tag| Regexp.new("\\b#{Regexp.escape(tag)}\\b") })] }
+    feeds.each do |feed|
+      Feedzirra::Feed.fetch_and_parse(feed.url).entries.each do |entry|
         regex.each do |r|
-          create_or_update_post(entry, r[0], selector) if entry_matches(entry, r[1])
+          create_or_update_post(entry, r[0], feed.selector) if entry_matches(entry, r[1])
         end
       end
     end
+
+    redirect_to :back, :notice => "Новости успешно обновлены"
   end
 
   def create_or_update_post entry, category_id, selector
-    Post.find_or_create_by_source(entry.url,
-                                  :title => entry.title,
-                                  :body => get_body(entry, selector),
-                                  :category_ids => [category_id]).save()
+    Post.find_or_initialize_by_source(entry.url).update_attributes(:title => entry.title,
+                                                                   :body => get_body(entry, selector),
+                                                                   :category_ids => [category_id],
+                                                                   :published_at => entry.published)
   end
 
   def get_body entry, selector
-    Nokogiri::HTML(open(entry.url)).css(selector).first.text
+    doc = Nokogiri::HTML(open(entry.url))
+    doc.encoding = 'utf-8'
+    html = doc.css(selector).first.inner_html
+    Sanitize.clean(html,
+                   :elements => %w[
+        b blockquote br cite em i li ol p pre
+        q s small strike strong sub sup time u ul
+      ], :remove_contents => ["script"])
   end
 
   def entry_matches entry, regex

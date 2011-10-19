@@ -1,4 +1,12 @@
 Belta::Application.routes.draw do
+  resources :feeds
+
+  resources :themes
+
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   get "crawler/index"
 
   resources :posts

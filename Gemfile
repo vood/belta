@@ -16,14 +16,17 @@ group :assets do
   gem 'uglifier'
 end
 
-gem 'therubyracer'
+# gem 'therubyracer'
 gem 'feedzirra', "~>0.0.31"
 gem 'jquery-rails'
 gem 'acts-as-taggable-on'
 gem 'formtastic'
+gem 'activeadmin'
+gem "meta_search",    '>= 1.1.0.pre'
+gem 'sanitize'
+gem 'tinymce-rails'
 
 # Use unicorn as the web server
-gem 'unicorn'
 
 # Deploy with Capistrano
 gem 'capistrano'

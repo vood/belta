@@ -1,25 +1,52 @@
-<h1>Listing categories</h1>
+<style type="text/css">
+    body {
+        font-family: 'Times New Roman';
+        color: #000000;
+    }
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    h1, h2 {
+        text-align: center;
+    }
 
-<% @categories.each do |category| %>
-  <tr>
-    <td><%= category.title %></td>
-    <td><%= category.description %></td>
-    <td><%= link_to 'Show', category %></td>
-    <td><%= link_to 'Edit', edit_category_path(category) %></td>
-    <td><%= link_to 'Destroy', category, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+    h3 {
+        text-align: right;
+        color: rgb(51, 102, 153);
+        border-bottom: 2px rgb(51, 102, 153) solid;
+        clear: both;
+        font-style: italic;
+    }
 
-<br />
+    dt {
+        float: left;
+    }
 
-<%= link_to 'New Category', new_category_path %>
+    .post span {
+        padding-right: 10px;
+    }
+
+    .post .source, .post .type {
+        text-align: right;
+        font-style: italic;
+    }
+</style>
+<div style="margin: 0 auto; width: 960px">
+  <h1>Содержание отчета за 10.09.2011</h1>
+
+  <% @categories.each do |category| %>
+
+      <h2><%= category.title %></h2>
+      <% category.posts.each do |post| %>
+          <div class="post">
+            <h3><%= post.title %></h3>
+
+            <div class="source"><span>Источник:</span><%= link_to(post.source, post.source) %></div>
+            <div class="type"><span>Тип материала:</span><%= post.is_ad ? 'рекламный' : 'информационный' %></div>
+            <div class="date"><span>Дата:</span><%= post.published_or_created_at.to_date %></div>
+            <div class="theme"><span>Тематика:</span><%= post.theme.title if post.theme %></div>
+            <div class="rating"><span>Оценка:</span><%= post.rating_title %></div>
+            <div class="body"><span>Текст:</span><%= raw post.body %></div>
+            <div class="relate"><span>Аналогичные материалы:</span></div>
+          </div>
+      <% end %>
+  <% end %>
+</div>
