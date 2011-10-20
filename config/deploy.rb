@@ -1,13 +1,14 @@
 $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Для работы rvm
 require 'rvm/capistrano' # Для работы rvm
-require 'bundler/capistrano' # Для работы bundler. При изменении гемов bundler автоматически обновит все гемы на сервере, чтобы они в точности соответствовали гемам разработчика. 
+#require 'bundler/capistrano' # Для работы bundler. При изменении гемов bundler автоматически обновит все гемы на сервере, чтобы они в точности соответствовали гемам разработчика.
 
 set :application, "belta"
 set :rails_env, "production"
-set :user, 'vood'
+set :user, 'root'
 set :domain, "itixity.com" # Это необходимо для деплоя через ssh. Именно ради этого я настоятельно советовал сразу же залить на сервер свой ключ, чтобы не вводить паролей.
-set :deploy_to, "/user/root/#{application}"
+set :deploy_to, "/home/root/#{application}"
 set :use_sudo, false
+set :using_rvm, true
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
 set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
 
