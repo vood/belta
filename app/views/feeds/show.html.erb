@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Url:</b>
+  <%= @feed.url %>
+</p>
+
+<p>
+  <b>Selector:</b>
+  <%= @feed.selector %>
+</p>
+
+<p>
+  <b>Xpath selector:</b>
+  <%= @feed.xpath_selector %>
+</p>
+
+
+<%= link_to 'Edit', edit_feed_path(@feed) %> |
+<%= link_to 'Back', feeds_path %>

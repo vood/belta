@@ -16,7 +16,6 @@ group :assets do
   gem 'uglifier'
 end
 
-# gem 'therubyracer'
 gem 'feedzirra', "~>0.0.31"
 gem 'jquery-rails'
 gem 'acts-as-taggable-on'
@@ -27,13 +26,19 @@ gem 'sanitize'
 gem 'tinymce-rails'
 
 # Use unicorn as the web server
+group :production do
+  gem 'unicorn'
+  gem 'therubyracer'
+end
 
 # Deploy with Capistrano
 gem 'capistrano'
 
 # To use debugger
-gem 'ruby-debug-ide', '=0.4.17.beta.8'
-gem 'ruby-debug19', :require => 'ruby-debug'
+group :development do
+  gem 'ruby-debug-ide', '=0.4.17.beta.8'
+  gem 'ruby-debug19', :require => 'ruby-debug'
+end
 
 group :test do
   # Pretty printed test output

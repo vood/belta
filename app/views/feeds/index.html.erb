@@ -1,0 +1,27 @@
+<h1>Listing feeds</h1>
+
+<table>
+  <tr>
+    <th>Url</th>
+    <th>Selector</th>
+    <th>Xpath selector</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @feeds.each do |feed| %>
+  <tr>
+    <td><%= feed.url %></td>
+    <td><%= feed.selector %></td>
+    <td><%= feed.xpath_selector %></td>
+    <td><%= link_to 'Show', feed %></td>
+    <td><%= link_to 'Edit', edit_feed_path(feed) %></td>
+    <td><%= link_to 'Destroy', feed, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Feed', new_feed_path %>
