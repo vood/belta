@@ -1,6 +1,12 @@
 # encoding: UTF-8
 class Post < ActiveRecord::Base
 
+  has_and_belongs_to_many :related,
+                          :class_name => 'Post',
+                          :join_table => 'related_posts',
+                          :foreign_key => :post_id,
+                          :association_foreign_key => :related_post_id
+
   TITLES = { 'Позитивная' => 1, 'Нейтральная' => 0, 'Негативная' => -1 }.invert
 
   belongs_to :theme

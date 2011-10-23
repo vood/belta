@@ -7,7 +7,7 @@ ActiveAdmin.register Post do
   index do
 
     column :title, :sortable => :title  do |post|
-      link_to post.title, admin_post_path(post)
+      link_to post.title, edit_admin_post_path(post)
     end
 
     column :published_at
@@ -27,6 +27,7 @@ ActiveAdmin.register Post do
       f.input :categories
       f.input :source
       f.input :is_ad
+      f.input :related
       f.input :rating, :as => :select, :collection => { 'Позитивная' => 1, 'Нейтральная' => 0, 'Негативная' => -1 }
       f.input :theme
       f.input :title
@@ -35,4 +36,5 @@ ActiveAdmin.register Post do
     end
     f.buttons
   end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111019145315) do
+ActiveRecord::Schema.define(:version => 20111020203158) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20111019145315) do
     t.boolean  "xpath_selector"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "selector_blacklist"
   end
 
   create_table "posts", :force => true do |t|
@@ -76,6 +77,11 @@ ActiveRecord::Schema.define(:version => 20111019145315) do
     t.datetime "published_at"
     t.integer  "rating"
     t.integer  "theme_id"
+  end
+
+  create_table "related_posts", :id => false, :force => true do |t|
+    t.integer "post_id"
+    t.integer "related_post_id"
   end
 
   create_table "taggings", :force => true do |t|
