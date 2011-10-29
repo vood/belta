@@ -12,7 +12,7 @@ class CrawlerController < ApplicationController
       if f
         f.entries.each do |entry|
           regex.each do |r|
-            create_or_update_post(entry, r[0], feed) if entry.required || entry_matches(entry, r[1])
+            create_or_update_post(entry, r[0], feed) if feed.required || entry_matches(entry, r[1])
           end
         end
       end
@@ -34,18 +34,19 @@ class CrawlerController < ApplicationController
     doc = Nokogiri::HTML(open(entry.url))
     doc.encoding = 'utf-8'
 
-    nodes = feed.xpath_selector ? doc.xpath(feed.selector) : feed.css(feed.selector)
+    nodes = feed.xpath_selector ? doc.xpath(feed.selector) : doc.css(feed.selector)
     html = nodes.to_html
 
     sanitize html, feed.selector_blacklist
   end
 
   def sanitize html, blacklist
+    blacklist = (%w[script] | blacklist.split(',')) if blacklist
     Sanitize.clean(html,
                        :elements => %w[
             b blockquote br cite em i li ol p pre
             q s small strike strong sub sup time u
-          ], :remove_contents => %w[script] | blacklist.split(','))
+          ], :remove_contents => blacklist)
 
   end
 
