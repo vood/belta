@@ -39,3 +39,4 @@ namespace :passenger do
 end
 
 after :deploy, "passenger:restart"
+after :deploy, "deploy:migrate"
