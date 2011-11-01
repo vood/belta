@@ -20,4 +20,10 @@ class Post < ActiveRecord::Base
   def published_or_created_at
     self.published_at || self.created_at
   end
+
+  def create_or_update_by_source params
+    related_post = self.find_by_title(params[:title])
+    post = self.find_or_initialize_by_source(params[:source]).update_attributes(params)
+    related_post.related.insert(post) if related_post
+  end
 end

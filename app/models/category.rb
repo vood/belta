@@ -6,4 +6,10 @@ class Category < ActiveRecord::Base
   def to_s
     title
   end
+
+  def all_regexps
+    Category.all(:include => :tags).collect { |c|
+      [c.id, Regexp.union(c.tag_list.map { |tag| Regexp.new("\\b#{Regexp.escape(tag)}\\b", true) })]
+    }
+  end
 end

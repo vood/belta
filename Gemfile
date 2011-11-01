@@ -23,6 +23,7 @@ gem 'activeadmin'
 gem "meta_search",    '>= 1.1.0.pre'
 gem 'sanitize'
 gem 'tinymce-rails'
+gem 'googlecharts'
 
 # Use unicorn as the web server
 group :production do
