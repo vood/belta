@@ -3,7 +3,7 @@ require 'open-uri'
 class CrawlerController < ApplicationController
   def index
     @feeds = Feed.all_by_url
-    Feedzirra::Feed.fetch_and_parse(@feeds.keys, :on_success => lambda{ |url, feed| parse_feed_entry(url, feed)  } )
+    Feedzirra::Feed.fetch_and_parse(@feeds.keys, :on_success => lambda{ |url, feed| parse_feed_entry(url, feed)  if feed } )
     redirect_back :notice => "Новости успешно обновлены"
   end
 
