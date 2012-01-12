@@ -27,8 +27,8 @@ gem 'formtastic', '=1.2.4'
 
 # Use unicorn as the web server
 group :production do
-  gem 'therubyracer'
-  gem 'mysql2'
+  #gem 'therubyracer'
+  #gem 'mysql2'
 end
 
 # Deploy with Capistrano

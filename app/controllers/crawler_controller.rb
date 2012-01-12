@@ -14,7 +14,7 @@ class CrawlerController < ApplicationController
             :body => Parser.parse(body, feed.selector, feed.selector_blacklist),
             :published_at => entry.published,
             :categories => [category]
-        ) if category
+        )
       end
     end
 
