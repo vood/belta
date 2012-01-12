@@ -1,13 +1,13 @@
 #encoding: utf-8
-
 ActiveAdmin.register Post do
+  menu :label => "Новости"
   filter :title, :as => :string
   filter :published_at, :as => :date_range
 
   index do
 
     column :title, :sortable => :title  do |post|
-      link_to post.title, edit_admin_post_path(post)
+      link_to post.title, edit_admin_post_path(post), :title => strip_tags(post.body).strip
     end
 
     column :published_at

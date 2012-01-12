@@ -1,23 +1,23 @@
 # encoding: utf-8
+require 'open-uri'
 class CrawlerController < ApplicationController
   def index
-    feeds = Feed.all
-
-    regex = Category.all_regexps
+    feeds = Feed.all(:include => :category)
 
     feeds.each do |feed|
-      Feedzirra::Feed.fetch_and_parse(feed.url, :on_success => lambda { |entry|
-        regex.each do |r|
-          Post.create_or_update_by_source(
-              :source => entry.url,
-              :title => entry.title,
-              :category_ids => [r[0]],
-              :body => get_body(entry, feed),
-              :published_at => entry.published) if feed.required || entry_matches(entry, r[1])
-        end
-      })
+      Feedzirra::Feed.fetch_and_parse(feed.url).entries.each do |entry|
+        body = open(entry.url)
+        category = feed.category || Category.matched([entry.title, body])
+        Post.create_or_update_by_source(
+            :source => entry.url,
+            :title => entry.title,
+            :body => Parser.parse(body, feed.selector, feed.selector_blacklist),
+            :published_at => entry.published,
+            :categories => [category]
+        ) if category
+      end
     end
 
-    redirect_to :back, :notice => "Новости успешно обновлены"
+    redirect_to :back, :notice => "Новости успешно обновлены" if request.env['HTTP_REFERER']
   end
 end

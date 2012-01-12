@@ -1,6 +1,5 @@
 #encoding = utf-8
 ActiveAdmin::Dashboards.build do
-
   # Define your dashboard sections here. Each block will be
   # rendered on the dashboard in the context of the view. So just
   # return the content which you would like to display.
@@ -8,29 +7,12 @@ ActiveAdmin::Dashboards.build do
   # == Simple Dashboard Section
   # Here is an example of a simple dashboard section
   #
-  section "Последние новости" do
-    ul do
-      Post.order('id desc').limit(5).collect do |post|
-        li link_to(post.title, admin_post_path(post))
-      end
-    end
-  end
 
-  section "Паук" do
-    ul do
-      li link_to("Запустить паука", '/crawler/index')
-      li link_to("Показать статьи", posts_path)
-    end
-  end
-
-  section "Статистика/Оценка" do
-    total = Post.count
-    div do
-      img :src => Gchart.pie(:data => [
-          (Post.count("rating = -1") / total * 100),
-          (Post.count("rating = 0 or rating is null")  / total * 100),
-          (Post.count("rating = 1")  / total * 100)
-      ])
+  section "Новости за последние 48 часа", :priority => 1 do
+    table_for Post.where("published_at >= ?", 1.day.ago).order('id desc') do
+      column("Заголовок") { |post| link_to(post.title, admin_post_path(post), :title => strip_tags(post.body).strip) }
+      column("Категория") { |post| post.categories.first }
+      column("Дата") { |post| post.created_at }
     end
   end
 

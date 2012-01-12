@@ -15,15 +15,15 @@ end
 
 gem 'sass-rails', "  ~> 3.1.0"
 gem 'text'
-gem 'feedzirra', "~>0.0.31"
+gem 'feedzirra', '~>0.0.31'
 gem 'jquery-rails'
 gem 'acts-as-taggable-on'
-gem 'formtastic'
 gem 'activeadmin'
-gem "meta_search",    '>= 1.1.0.pre'
+gem 'meta_search',    '>= 1.1.0.pre'
 gem 'sanitize'
 gem 'tinymce-rails'
 gem 'googlecharts'
+gem 'formtastic', '=1.2.4'
 
 # Use unicorn as the web server
 group :production do
@@ -35,14 +35,12 @@ end
 gem 'capistrano'
 
 # To use debugger
-group :development do
+group :development, :test do
   gem 'ruby-debug-ide', '=0.4.17.beta.8'
   gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'sqlite3'
-end
-
-group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
-  gem 'sqlite3'
+  #gem 'turn', :require => false
+  gem 'rspec-rails', '=2.7.0'
+  gem 'factory_girl_rails'
+  gem 'spork', '~> 0.9.0.rc'
 end

@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
                           :foreign_key => :post_id,
                           :association_foreign_key => :related_post_id
 
-  TITLES = { 'Позитивная' => 1, 'Нейтральная' => 0, 'Негативная' => -1 }.invert
+  TITLES = {'Позитивная' => 1, 'Нейтральная' => 0, 'Негативная' => -1}.invert
 
   belongs_to :theme
   has_many :category_posts
@@ -21,9 +21,11 @@ class Post < ActiveRecord::Base
     self.published_at || self.created_at
   end
 
-  def create_or_update_by_source params
-    related_post = self.find_by_title(params[:title])
-    post = self.find_or_initialize_by_source(params[:source]).update_attributes(params)
-    related_post.related.insert(post) if related_post
+  def self.create_or_update_by_source params
+    related_post = find_by_title(params[:title])
+    post = find_or_initialize_by_source(params[:source])
+    post.update_attributes(params)
+    related_post.related.push(post) if related_post && related_post != post
+    post
   end
 end
