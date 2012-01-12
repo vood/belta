@@ -7,7 +7,7 @@ class CrawlerController < ApplicationController
     feeds.each do |feed|
       Feedzirra::Feed.fetch_and_parse(feed.url).entries.each do |entry|
         body = open(entry.url)
-        category = feed.category || Category.matched([entry.title, body])
+        category = feed.category || Category.matched(entry.title, body)
         Post.create_or_update_by_source(
             :source => entry.url,
             :title => entry.title,
