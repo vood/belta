@@ -13,7 +13,7 @@ class Category < ActiveRecord::Base
   after_save :update_regexp_cache
 
   def self.matched *strs
-    id = self.regexps.select { |id, regex| strs.select { |str| regex.match(str) } }.keys.first
+    id = self.regexps.select { |id, regex| strs.select { |str| regex.match(str.to_s) } }.keys.first
     where(:id => id).first
   end
 

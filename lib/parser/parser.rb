@@ -9,7 +9,7 @@ class Parser
 
     nodes = selector.include?('/') ? doc.xpath(selector) : doc.css(selector)
 
-    blacklist += ', ' + self::BLACKLIST.join(',')
+    blacklist = (blacklist.to_s.split(',') + self::BLACKLIST).compact.uniq.join(',')
     nodes.css(blacklist).remove
     nodes.to_html
   end
