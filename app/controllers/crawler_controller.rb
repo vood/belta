@@ -24,7 +24,7 @@ class CrawlerController < ApplicationController
               :body => body,
               :published_at => entry.published,
               :categories => [category])
-          post.was_new ? @created += 1 : @updated +=1
+          post.was_new ? @created += 1 : @updated += 1
         end
       rescue Exception => e
         logger.error('Crawler: ' + e.to_s)

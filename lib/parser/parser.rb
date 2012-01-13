@@ -10,7 +10,7 @@ class Parser
     if blacklist.length > 1
       nodes.css(blacklist).remove
     end
-    Sanitize.clean(nodes.to_html, Sanitize::Config::RELAXED).strip
+    Sanitize.clean(nodes.to_html, Sanitize::Config::RESTRICTED).strip
   end
 
 end
