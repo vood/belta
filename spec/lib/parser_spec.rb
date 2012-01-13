@@ -13,6 +13,7 @@ describe Parser do
 </body>
 </html>"
       Parser.parse(text, '.content', '.trash, script').gsub("\n", '').should eq("expected text <a href=\"#\">with link</a>")
+      Parser.parse(text, '.content').gsub("\n", '').should eq("expected text <a href=\"#\">with link</a>")
     end
   end
 end

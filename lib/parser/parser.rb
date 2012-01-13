@@ -6,8 +6,10 @@ class Parser
 
     nodes = selector.include?('/') ? doc.xpath(selector) : doc.css(selector)
 
-    blacklist = blacklist.to_s.split(',').compact.uniq.join(',')
-    nodes.css(blacklist).remove
+    blacklist = blacklist.to_s.split(',').compact.uniq.join(',').strip
+    if blacklist.length > 1
+      nodes.css(blacklist).remove
+    end
     Sanitize.clean(nodes.to_html, Sanitize::Config::RELAXED).strip
   end
 

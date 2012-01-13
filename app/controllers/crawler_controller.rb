@@ -16,7 +16,7 @@ class CrawlerController < ApplicationController
       begin
         body = open(entry.url).read
         body = Parser.parse(body, feed.selector, feed.selector_blacklist)
-        category = feed.category || Category.matched(entry.title, strip_tags(body))
+        category = feed.category || Category.matched(entry.title, body)
         if category
           post = Post.create_or_update_by_source(
               :source => entry.url,
