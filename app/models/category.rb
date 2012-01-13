@@ -12,6 +12,7 @@ class Category < ActiveRecord::Base
   @regexp_cache = {}
 
   after_save :update_regexp_cache
+  after_destroy :update_regexp_cache
 
   def self.matched *strs
     str = strs.join(" ")
@@ -39,6 +40,6 @@ class Category < ActiveRecord::Base
   private
 
   def update_regexp_cache
-    self.class.regexp_cache[id] = tags_as_regexp
+    destroyed? ? self.class.regexp_cache[id] = tags_as_regexp : self.class.regexp_cache.delete(id)
   end
 end
