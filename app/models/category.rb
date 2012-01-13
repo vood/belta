@@ -29,7 +29,7 @@ class Category < ActiveRecord::Base
   end
 
   def tags_as_regexp
-    Regexp.union(tag_list.select { |tag| /\b#{Regexp.escape(tag)}\b/u })
+    Regexp.union(tag_list.select { |tag| /\b#{Regexp.escape(tag)}\b/u }) if tag_list.length
   end
 
   def to_s

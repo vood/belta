@@ -12,7 +12,7 @@ describe Parser do
   </div>
 </body>
 </html>"
-      Parser.parse(text, '.content', '.trash, script').gsub("\n", '').should eq("<div class=\"content\">expected text <a href=\"#\">with link</a></div>")
+      Parser.parse(text, '.content', '.trash, script').gsub("\n", '').should eq("expected text <a href=\"#\">with link</a>")
     end
   end
 end
