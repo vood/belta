@@ -1,3 +1,4 @@
+#encoding: utf-9
 class Category < ActiveRecord::Base
   acts_as_taggable
   has_many :category_posts

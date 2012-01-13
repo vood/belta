@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Parser
   BLACKLIST = %w[script]
   WHITELIST = %w[b blockquote br cite em i li ol p pre
