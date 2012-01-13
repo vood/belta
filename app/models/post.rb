@@ -9,6 +9,8 @@ class Post < ActiveRecord::Base
 
   TITLES = {'Позитивная' => 1, 'Нейтральная' => 0, 'Негативная' => -1}.invert
 
+  @was_new = true
+
   belongs_to :theme
   has_many :category_posts
   has_many :categories, :through => :category_posts
@@ -24,6 +26,7 @@ class Post < ActiveRecord::Base
   def self.create_or_update_by_source params
     related_post = find_by_title(params[:title])
     post = find_or_initialize_by_source(params[:source])
+    post.was_new = post.new_record?
     post.update_attributes(params)
     related_post.related.push(post) if related_post && related_post != post
     post
