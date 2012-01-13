@@ -1,8 +1,6 @@
 #encoding: utf-8
 ActiveAdmin.register Post do
   menu :label => "Новости"
-  filter :title, :as => :string
-  filter :published_at, :as => :date_range
 
   index do
 
