@@ -9,7 +9,7 @@ class Post < ActiveRecord::Base
 
   TITLES = {'Позитивная' => 1, 'Нейтральная' => 0, 'Негативная' => -1}.invert
 
-  @was_new = true
+  attr_accessor :was_new
 
   belongs_to :theme
   has_many :category_posts
