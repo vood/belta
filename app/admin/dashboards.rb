@@ -11,8 +11,8 @@ ActiveAdmin::Dashboards.build do
   section "Новости за последние 24 часа", :priority => 1 do
     table_for Post.where("published_at >= ?", 1.day.ago).order('id desc') do
       column("Заголовок") { |post| link_to(post.title, admin_post_path(post), :title => strip_tags(post.body).gsub(/\s+/, ' ').strip) }
-      column("Категория") { |post| post.categories.first }
-      column("Дата") { |post| post.created_at }
+      column("Категория") { |post| post.categories.first.to_s }
+      column("Дата") { |post| post.created_at.to_s }
     end
   end
 
